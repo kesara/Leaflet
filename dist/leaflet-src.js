@@ -1,10 +1,10 @@
 /*
- Leaflet 1.0.0-rc.1 (a626826), a JS library for interactive maps. http://leafletjs.com
+ Leaflet 1.0.0-rc.1-bbm (e4005e6), a JS library for interactive maps. http://leafletjs.com
  (c) 2010-2015 Vladimir Agafonkin, (c) 2010-2011 CloudMade
 */
 (function (window, document, undefined) {
 var L = {
-	version: '1.0.0-rc.1'
+	version: '1.0.0-rc.1-bbm'
 };
 
 function expose() {
@@ -3155,7 +3155,7 @@ L.Map = L.Evented.extend({
 		// @event keypress: Event
 		// Fired when the user presses a key from the keyboard while the map is focused.
 		L.DomEvent[onOff](this._container, 'click dblclick mousedown mouseup ' +
-			'mouseover mouseout mousemove contextmenu keypress', this._handleDOMEvent, this);
+			'mouseover mouseout mousemove contextmenu keypress touchstart touchmove touchend', this._handleDOMEvent, this);
 
 		if (this.options.trackResize) {
 			L.DomEvent[onOff](window, 'resize', this._onResize, this);
@@ -9351,15 +9351,19 @@ L.DomEvent = {
 	// Gets normalized mouse position from a DOM event relative to the
 	// `container` or to the whole page if not specified.
 	getMousePosition: function (e, container) {
+		var evt = e;
+		if (evt.touches) {
+			evt = evt.touches[0] || evt.changedTouches[0];
+		}
 		if (!container) {
-			return new L.Point(e.clientX, e.clientY);
+			return new L.Point(evt.clientX, evt.clientY);
 		}
 
 		var rect = container.getBoundingClientRect();
 
 		return new L.Point(
-			e.clientX - rect.left - container.clientLeft,
-			e.clientY - rect.top - container.clientTop);
+			evt.clientX - rect.left - container.clientLeft,
+			evt.clientY - rect.top - container.clientTop);
 	},
 
 	// @function getWheelDelta(ev: DOMEvent): Number
