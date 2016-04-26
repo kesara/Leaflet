@@ -7,6 +7,10 @@ Leaflet Changelog
 
 An in-progress version being developed on the `master` branch.
 
+## 1.0-rc1-bbm (April 26, 2016)
+### Improvements
+* Add mobile touch events (by [@lee101](https://github.com/lee101)) [#2](https://github.com/kesara/Leaflet/pull/2)
+
 
 ## 1.0-rc1 (April 18, 2016)
 
